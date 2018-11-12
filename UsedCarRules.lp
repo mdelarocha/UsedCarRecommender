@@ -8,9 +8,9 @@ _bestOption(Miles, Year, Brand, Budget, Price) :- _goodMileage(Miles, Year), _go
 
 % Rules regarding Mileage
 
-_badMileage(Miles, Years) :- Miles >= 14,000 * Years.
+_badMileage(Miles, Years) :- Miles >= 14000 * Years.
 
-_decentMileage(Miles, Years) :- Miles >= 12,000 * Years, 14,000 * Years > Miles.
+_decentMileage(Miles, Years) :- Miles >= 12000 * Years, 14000 * Years > Miles.
 
 _goodMileage(Miles, Years) :- not _decentMileage(Miles, Years).
 
