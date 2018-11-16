@@ -2,8 +2,8 @@
 % Developed by: Miguel de la Rocha
 % CS 4v98, Fall 2018
 
-#include 'HighLevelFacts.lp'.
-# include 'CarFact.lp'.
+# include 'HighLevelFacts.lp'.
+# include 'CarFact_TEST.lp'.
 %include budget as a fact
 
 %inputs to ask from user
