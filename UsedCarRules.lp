@@ -7,18 +7,18 @@
 %include budget as a fact
 
 %inputs to ask from user
-budget(1200).
+budget(17000).
 preference(luxury).
 
 
 
-_bestOption(Miles, Year, Brand, Model, Price) :- _goodMileage(Miles, Year), _goodYearRange(Year), _reliable(Brand), _priceRange(Price, Budget).
+_bestOption(Miles, Year, Brand, Model, Price) :- _car(Miles, Year, Brand, Model, Price), _goodMileage(Miles, Year), _goodYearRange(Year), _reliable(Brand), _priceRange(Price, Budget).
 
 % Rules regarding Mileage
 
-_badMileage(Miles, Years) :- Miles >= 14000 * Years.
+_badMileage(Miles, Years) :- Miles > 14000 * Years.
 
-_decentMileage(Miles, Years) :- Miles >= 12000 * Years, 14000 * Years > Miles.
+_decentMileage(Miles, Years) :- Miles > 12000 * Years, Miles < 14000 * Years.
 
 _goodMileage(Miles, Years) :- not _decentMileage(Miles, Years), not _badMileage(Miles, Years).
 
@@ -30,9 +30,9 @@ _priceRange(Price, Budget) :- Price =< Budget.
 
 % Rules regarding the Year Ranges
 
-_badYearRange(Year) :- 2008 > Year.
+_badYearRange(Year) :- 10 < Year.
 
-_decentYearRange(Year) :- Year >= 2008, 2013 > Year.
+_decentYearRange(Year) :- Year >= 10, 5 < Year.
 
 _goodYearRange(Year) :- not _decentYearRange(Year), not _badYearRange(Year).
 
