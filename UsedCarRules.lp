@@ -3,6 +3,7 @@
 % CS 4v98, Fall 2018
 
 # include 'HighLevelFacts.lp'.
+# include 'CarFact.lp'.
 
 _bestOption(Miles, Year, Brand, Budget, Price) :- _goodMileage(Miles, Year), _goodYearRange(Year), _reliable(Brand), _priceRange(Price, Budget).
 
