@@ -1,44 +1,52 @@
 % ASP program automating Common Sense when Buying a used Car
-% Developed by: Miguel de la Rocha
+% Developed by: Miguel de la Rocha, Nahian Afsari
 % CS 4v98, Fall 2018
 
 # include 'HighLevelFacts.lp'.
-# include 'CarFact_TEST.lp'.
-%include budget as a fact
+# include 'CarFact_Sample.lp'.
 
-%inputs to ask from user
-budget(1200).
-preference(luxury).
+% Rules that define what are the best options from the knowledge base
 
+_bestOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price), _reliable(Brand), _goodMileage(Age, Miles),
+    _goodYearRange(Age), _luxury(Brand).
 
+% _bestOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price, Budget), not _badOption(Miles, Age, Brand, Model, Price, Budget),
+%     not _fairOption(Miles, Age, Brand, Model, Price, Budget).
 
-_bestOption(Miles, Year, Brand, Model, Price) :- _goodMileage(Miles, Year), _goodYearRange(Year), _reliable(Brand), _priceRange(Price, Budget).
+% Rules that define what is a fair option 
 
-% Rules regarding Mileage
+% _fairOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price), _reliable(Brand), _decentMileage(Age, Miles),
+%     _decentYearRange(Age). 
 
-_badMileage(Miles, Years) :- Miles >= 14000 * Years.
+% _fairOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price), not _bestOption(Miles, Age, Brand, Model, Price, Budget),
+%     not _badOption(Miles, Age, Brand, Model, Price, Budget).
 
-_decentMileage(Miles, Years) :- Miles >= 12000 * Years, 14000 * Years > Miles.
+% % Rules that define what is a bad option
 
-_goodMileage(Miles, Years) :- not _decentMileage(Miles, Years), not _badMileage(Miles, Years).
+% _badOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price, Budget), not _reliable(Brand), not _goodMileage(Age, Miles),
+%     not _goodYearRange(Age).
 
+% _badOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price, Budget), not _reliable(Brand), _badMileage(Age, Miles),
+%     _badYearRange(Age). 
 
+% _badOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price, Budget), not _bestOption(Miles, Age, Brand, Model, Price, Budget),
+%     not _fairOption(Miles, Age, Brand, Model, Price, Budget).
 
-% Rules regarding the Price Range
+% Rules for mileages
 
-_priceRange(Price, Budget) :- Price =< Budget. 
+_goodMileage(Age, Miles) :- not _decentMileage(Age, Miles), not _badMileage(Age, Miles).
 
-% Rules regarding the Year Ranges
+_decentMileage(Age, Miles) :- (Age * 12000) < Miles, not _badMileage(Age, Miles).
 
-_badYearRange(Year) :- 2008 > Year.
+_badMileage(Age, Miles) :- (Age * 14000) < Miles. 
 
-_decentYearRange(Year) :- Year >= 2008, 2013 > Year.
+% Rules for year ranges
 
-_goodYearRange(Year) :- not _decentYearRange(Year), not _badYearRange(Year).
+_goodYearRange(Age) :- not _decentYearRange(Age), not _badYearRange(Age).
 
+_decentYearRange(Age) :- 3 < Age, not _badYearRange(Age).
 
-% Rules to determine what is the Best Option, and Fair Options for a Used Car 
+_badYearRange(Age) :- 10 < Age.
 
-_fairOption(Miles, Year, Brand, Budget, Price) :- _decentMileage(Miles, Year), _decentYearRange(Year), _priceRange(Price, Budget), _luxury(Brand), not _bestOption(Miles, Year, Brand, Budget, Price).
-
-_bestOption(Miles, Year, Brand, Budget, Price) :- _goodMileage(Miles, Year), _goodYearRange(Year), _reliable(Brand), _priceRange(Price, Budget).
+% Running the Query
+?- _bestOption(A,B,C,D,E).
