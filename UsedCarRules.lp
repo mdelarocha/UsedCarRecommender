@@ -32,6 +32,10 @@ _badOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, M
 _badOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price, Budget), not _bestOption(Miles, Age, Brand, Model, Price, Budget),
     not _fairOption(Miles, Age, Brand, Model, Price, Budget).
 
+% Rule that allows the user to have an input in terms of budget 
+
+_priceRange(Price) :- _budget(N), Price =< N.
+
 % Rules for mileages
 
 _goodMileage(Age, Miles) :- not _decentMileage(Age, Miles), not _badMileage(Age, Miles).
