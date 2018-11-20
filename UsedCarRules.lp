@@ -10,27 +10,27 @@
 _bestOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price), _reliable(Brand), _goodMileage(Age, Miles),
     _goodYearRange(Age), _luxury(Brand).
 
-% _bestOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price, Budget), not _badOption(Miles, Age, Brand, Model, Price, Budget),
-%     not _fairOption(Miles, Age, Brand, Model, Price, Budget).
+_bestOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price, Budget), not _badOption(Miles, Age, Brand, Model, Price, Budget),
+    not _fairOption(Miles, Age, Brand, Model, Price, Budget).
 
 % Rules that define what is a fair option 
 
-% _fairOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price), _reliable(Brand), _decentMileage(Age, Miles),
-%     _decentYearRange(Age). 
+_fairOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price), _reliable(Brand), _decentMileage(Age, Miles),
+    _decentYearRange(Age). 
 
-% _fairOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price), not _bestOption(Miles, Age, Brand, Model, Price, Budget),
-%     not _badOption(Miles, Age, Brand, Model, Price, Budget).
+_fairOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price), not _bestOption(Miles, Age, Brand, Model, Price, Budget),
+    not _badOption(Miles, Age, Brand, Model, Price, Budget).
 
 % % Rules that define what is a bad option
 
-% _badOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price, Budget), not _reliable(Brand), not _goodMileage(Age, Miles),
-%     not _goodYearRange(Age).
+_badOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price, Budget), not _reliable(Brand), not _goodMileage(Age, Miles),
+    not _goodYearRange(Age).
 
-% _badOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price, Budget), not _reliable(Brand), _badMileage(Age, Miles),
-%     _badYearRange(Age). 
+_badOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price, Budget), not _reliable(Brand), _badMileage(Age, Miles),
+    _badYearRange(Age). 
 
-% _badOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price, Budget), not _bestOption(Miles, Age, Brand, Model, Price, Budget),
-%     not _fairOption(Miles, Age, Brand, Model, Price, Budget).
+_badOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price, Budget), not _bestOption(Miles, Age, Brand, Model, Price, Budget),
+    not _fairOption(Miles, Age, Brand, Model, Price, Budget).
 
 % Rules for mileages
 
