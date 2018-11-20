@@ -3,34 +3,26 @@
 % CS 4v98, Fall 2018
 
 # include 'HighLevelFacts.lp'.
-# include 'CarFact_Sample.lp'.
+# include 'CarFacts.lp'.
+
+% User defined budget
+% TODO: implement that the user can input this fact
+_budget(15000).
 
 % Rules that define what are the best options from the knowledge base
 
-_bestOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price), _reliable(Brand), _goodMileage(Age, Miles),
-    _goodYearRange(Age), _luxury(Brand).
-
-_bestOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price, Budget), not _badOption(Miles, Age, Brand, Model, Price, Budget),
-    not _fairOption(Miles, Age, Brand, Model, Price, Budget).
+_bestOption(Miles, Age, Brand, Model, Price) :- _car(Miles, Age, Brand, Model, Price), _reliable(Brand), _goodMileage(Age, Miles),
+    _goodYearRange(Age), _priceRange(Price).
 
 % Rules that define what is a fair option 
 
-_fairOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price), _reliable(Brand), _decentMileage(Age, Miles),
-    _decentYearRange(Age). 
+_fairOption(Miles, Age, Brand, Model, Price) :- _car(Miles, Age, Brand, Model, Price), _reliable(Brand), _decentMileage(Age, Miles),
+    _decentYearRange(Age), _priceRange(Price). 
 
-_fairOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price), not _bestOption(Miles, Age, Brand, Model, Price, Budget),
-    not _badOption(Miles, Age, Brand, Model, Price, Budget).
+% Rules that define what is a bad option
 
-% % Rules that define what is a bad option
-
-_badOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price, Budget), not _reliable(Brand), not _goodMileage(Age, Miles),
-    not _goodYearRange(Age).
-
-_badOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price, Budget), not _reliable(Brand), _badMileage(Age, Miles),
-    _badYearRange(Age). 
-
-_badOption(Miles, Age, Brand, Model, Price, Budget) :- _car(Miles, Age, Brand, Model, Price, Budget), not _bestOption(Miles, Age, Brand, Model, Price, Budget),
-    not _fairOption(Miles, Age, Brand, Model, Price, Budget).
+_badOption(Miles, Age, Brand, Model, Price) :- _car(Miles, Age, Brand, Model, Price), not _reliable(Brand), _badMileage(Age, Miles),
+    _badYearRange(Age), not _priceRange(Price).
 
 % Rule that allows the user to have an input in terms of budget 
 
@@ -54,3 +46,5 @@ _badYearRange(Age) :- 10 < Age.
 
 % Running the Query
 ?- _bestOption(A,B,C,D,E).
+?- _fairOption(A,B,C,D,E).
+?- _badOption(A,B,C,D,E).

@@ -27,12 +27,12 @@ def cleanString(inputString):
 
 if __name__ == '__main__':
     # Open a file for writing
-    f = open("CarFacts_TEST.lp", "a")
+    f = open("CarFacts.lp", "a")
     # Constant for year where the program is executed
     YEAR = datetime.datetime.now().year
 
     # Open the file for the car data
-    with open('data/tc20171021.csv') as csv_file:
+    with open('data/sample.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=",")
         line_count = 0
         name = ""
@@ -73,5 +73,5 @@ if __name__ == '__main__':
             f.write(line)
             line_count += 1
 
-            print("Writing line: ", line_count)
+            print(line)
 
